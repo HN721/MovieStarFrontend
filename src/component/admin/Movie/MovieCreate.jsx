@@ -52,7 +52,7 @@ const MovieCreate = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <div className=" h-screen px-6 pt-10 p-6 rounded-sm bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Tambah Film</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -69,7 +69,7 @@ const MovieCreate = () => {
             value={formData.judul}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
 
@@ -87,7 +87,7 @@ const MovieCreate = () => {
             onChange={handleChange}
             required
             rows="3"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 p-5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></textarea>
         </div>
 
@@ -105,24 +105,23 @@ const MovieCreate = () => {
             value={formData.durasi}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block p-2 border-b-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
 
         <div>
           <label
-            htmlFor="gambar"
-            className="block text-sm font-medium text-gray-700"
+            class="block mb-2 text-sm font-medium text-gray-900 "
+            for="file_input"
           >
-            Gambar
+            Upload file
           </label>
+
           <input
+            class="block w-full text-sm p-3 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none   "
+            id="file_input"
             type="file"
-            name="gambar"
-            id="gambar"
             onChange={handleFileChange}
-            required
-            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
           />
         </div>
 

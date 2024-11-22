@@ -27,6 +27,8 @@ const App = () => {
   return (
     <>
       <Router>
+        {shouldShowNavbar && <Navbar />}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
