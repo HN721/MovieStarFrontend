@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminRoutes from "./pages/admin/AdminRoutes"; // Import AdminRoutes
+import Login from "./component/Login";
+import Register from "./component/Register";
 
 const App = () => {
   return (
@@ -8,8 +10,8 @@ const App = () => {
       <Routes>
         <Route path="/admin/*" element={<AdminRoutes />} />
 
-        {/* Rute Default */}
-        <Route path="*" element={<div>404 Not Found</div>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

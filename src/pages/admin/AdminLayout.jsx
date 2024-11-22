@@ -6,7 +6,7 @@ import Dashboard from "../../component/admin/dashboard/Dashboard";
 
 const AdminLayout = () => {
   return (
-    <div className="flex">
+    <div className="flex my-5 mx-5">
       <Sidebar />
       <main className="flex-1">
         <Outlet />
