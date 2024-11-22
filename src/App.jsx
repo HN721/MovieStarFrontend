@@ -11,6 +11,7 @@ import Login from "./component/Login";
 import Register from "./component/Register";
 import Navbar from "./component/Navbar";
 import { useSelector } from "react-redux";
+import Home from "./pages/Home";
 
 const App = () => {
   const token = useSelector((state) => state.auth.user);
@@ -26,9 +27,8 @@ const App = () => {
   return (
     <>
       <Router>
-        {shouldShowNavbar && <Navbar />}
-
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route
             path="/admin/*"
             element={token ? <AdminRoutes /> : <Navigate to="/login" />}
