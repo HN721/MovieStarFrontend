@@ -23,9 +23,9 @@ const Sidebar = () => {
               <span>{item.icon}</span>
               <span>{item.name}</span>
             </Link>
-            <button onClick={handleLogout}>Logout</button>
           </li>
         ))}
+        <span onClick={handleLogout}>Logout</span>
       </ul>
     </aside>
   );
