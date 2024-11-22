@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/logo.png";
+
 export default function Navbar() {
   return (
     <div className="flex  justify-around items-center bg-slate-950">
@@ -11,6 +11,7 @@ export default function Navbar() {
         <p className="text-white text-xl hover:text-slate-500">Home</p>
         <p className="text-white text-xl hover:text-slate-500">Movie</p>
         <p className="text-white text-xl hover:text-slate-500">Trending</p>
+
         <p className="text-white text-xl hover:text-slate-500">Login</p>
       </div>
     </div>

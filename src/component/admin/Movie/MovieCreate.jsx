@@ -52,7 +52,7 @@ const MovieCreate = () => {
   };
 
   return (
-    <div className=" h-screen px-6 pt-10 p-6 rounded-sm bg-gray-100 rounded-lg shadow-md">
+    <div className=" h-screen px-6 pt-10 p-6  bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Tambah Film</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

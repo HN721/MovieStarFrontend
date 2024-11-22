@@ -1,36 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const MovieList = () => {
+  const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
-  //   const movies = [
-  //     {
-  //       id: 1,
-  //       judul: "The Shawshank Redemption",
-  //       durasi: 142,
-  //     },
-  //     {
-  //       id: 2,
-  //       judul: "The Dark Knight",
-  //       durasi: 152,
-  //     },
-  //     {
-  //       id: 3,
-  //       judul: "Inception",
-  //       durasi: 148,
-  //     },
-  //     {
-  //       id: 4,
-  //       judul: "Fight Club",
-  //       durasi: 139,
-  //     },
-  //     {
-  //       id: 5,
-  //       judul: "Pulp Fiction",
-  //       durasi: 154,
-  //     },
-  //   ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/film/get-all"
+        );
+        setMovies(response.data);
+        console.log(response.data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
+    fetchData();
+  }, []);
   return (
     <div className="px-6 pt-12 bg-gray-100 h-screen rounded-md ">
       <div className="flex justify-between pb-3 ">
