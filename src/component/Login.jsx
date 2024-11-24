@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; // Make sure axios is imported
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../redux/slice/auth"; // Make sure to import login from authSlice
 import { useNavigate } from "react-router-dom";
+import LoginApi from "../services/Login";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,31 +19,18 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/user/login",
-        {
-          email,
-          password,
-        }
-      );
+    const res = await LoginApi(email, password);
+    // Dispatch login action to update Redux state
+    dispatch(loginAction(res));
+    localStorage.setItem("userInfo", JSON.stringify(res));
 
-      // Dispatch login action to update Redux state
-      dispatch(loginAction(response.data));
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
+    // This will update Redux state and localStorage
 
-      // This will update Redux state and localStorage
-
-      console.log(response.data.role);
-
-      // Navigate based on the user's role
-      if (response.data.role === "user") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/register");
-      }
-    } catch (error) {
-      console.log(error);
+    console.log(res.role);
+    if (res.role === "admin") {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/register");
     }
   };
 

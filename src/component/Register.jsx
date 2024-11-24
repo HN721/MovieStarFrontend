@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setUser } from "../redux/slice/register";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [hp, setHp] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const handleRegister = async (e) => {
     e.preventDefault(); // Mencegah reload halaman
     try {
@@ -20,6 +22,8 @@ const Register = () => {
           password,
         }
       );
+      dispatch(setUser(response.data));
+      console.log(response.data);
     } catch (error) {
       console.error(
         "Registration Error:",
