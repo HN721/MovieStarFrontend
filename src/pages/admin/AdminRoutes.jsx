@@ -3,6 +3,8 @@ import AdminLayout from "./AdminLayout"; // Layout utama
 import Dashboard from "../../component/admin/dashboard/Dashboard";
 import MovieList from "../../component/admin/Movie/MovieList";
 import MovieCreate from "../../component/admin/Movie/MovieCreate";
+import Bioskop from "../../component/admin/bioskop/Bioskop";
+import AddBioskop from "../../component/admin/bioskop/AddBioskop";
 
 const AdminRoutes = () => {
   return (
@@ -14,6 +16,8 @@ const AdminRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="MovieList" element={<MovieList />} />
         <Route path="add-movie" element={<MovieCreate />} />
+        <Route path="bioskop" element={<Bioskop />} />
+        <Route path="add-biokop" element={<AddBioskop />} />
       </Route>
     </Routes>
   );
