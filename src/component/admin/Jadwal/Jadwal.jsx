@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Jadwal() {
+  const navigate = useNavigate();
   return (
     <div className="bg-gray-100 h-screen p-6">
       <div className="flex justify-between mb-4">
@@ -39,36 +41,11 @@ export default function Jadwal() {
             </tr>
           </thead>
           <tbody>
-            {bioskop.length > 0 ? (
-              bioskop.map((item, index) => (
-                <tr
-                  key={index}
-                  className="odd:bg-white even:bg-gray-50 border-b"
-                >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                  >
-                    {item.nama}
-                  </th>
-                  <td className="px-6 py-4">{item.lokasi}</td>
-                  <td className="px-6 py-4">
-                    <a
-                      href="#"
-                      className="font-medium text-blue-600 hover:underline"
-                    >
-                      Edit
-                    </a>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="px-6 py-4 text-center">
-                  Tidak ada Jadwal yang tersedia.
-                </td>
-              </tr>
-            )}
+            <tr>
+              <td colSpan="3" className="px-6 py-4 text-center">
+                Tidak ada Jadwal yang tersedia.
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
