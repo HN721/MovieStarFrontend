@@ -21,7 +21,7 @@ const MovieList = () => {
     fetchData();
   }, []);
   return (
-    <div className="px-6 pt-12 bg-gray-100 h-screen rounded-md ">
+    <div className="p-6 bg-gray-100 h-screen rounded-md ">
       <div className="flex justify-between pb-3 ">
         <h1 className="text-3xl font-bold ">Daftar Film</h1>
         <button

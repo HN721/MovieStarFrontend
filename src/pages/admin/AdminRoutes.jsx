@@ -17,7 +17,7 @@ const AdminRoutes = () => {
         <Route path="MovieList" element={<MovieList />} />
         <Route path="add-movie" element={<MovieCreate />} />
         <Route path="bioskop" element={<Bioskop />} />
-        <Route path="add-biokop" element={<AddBioskop />} />
+        <Route path="add-bioskop" element={<AddBioskop />} />
       </Route>
     </Routes>
   );
