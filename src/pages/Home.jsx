@@ -1,40 +1,34 @@
 import React from "react";
-import Background from "../assets/Disney.jpg";
-import ListMovie from "./ListMovie";
+import spiderman from "../assets/Spiderman.jpg";
 
 export default function Home() {
   return (
-    <>
-      <div
-        className="min-h-screen bg-cover bg-center text-white flex items-center justify-center relative"
-        style={{ backgroundImage: `url(${Background})` }}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-70"></div>
-
-        {/* Content */}
-        <div className="relative  flex flex-col  text-center items-center  md:px-8 max-w-4xl">
-          {/* Heading */}
-          <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
-            Welcome to Movie Stars World
-          </h2>
-          <p className="mt-4 text-lg md:text-xl text-gray-300">
-            Dive into the enchanting world of Disney. Watch your favorite
-            movies, shows, and exclusive series all in one place.
-          </p>
-          {/* Buttons */}
-          <div className="mt-6 flex gap-4">
-            <button className="bg-red-800 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-full text-lg">
-              Booking Now
-            </button>
-            <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-full text-lg">
-              More Info
-            </button>
+    <div
+      className="h-screen bg-cover bg-center"
+      style={{ backgroundImage: `url(${spiderman})` }}
+    >
+      <div className="h-full w-full bg-black bg-opacity-50 flex items-center">
+        <div className="text-left pl-16">
+          <h1 className="text-white text-5xl font-poppins mb-4">
+            SpiderMan No Way Home
+          </h1>
+          <div className="flex gap-3 mb-3">
+            <span className="text-white text-lg mr-2">2021 |</span>
+            <span className="text-white text-lg mr-2">2h 28m</span>
+            <span className="text-white text-lg mr-2 px-2 bg-amber-500 rounded-sm">
+              Action
+            </span>
+            <span className="text-white text-lg mr-2">Adventure</span>
+            <span className="text-white text-lg mr-2">Fantasy</span>
           </div>
-          {/* Trending Thumbnails */}\
+          <p className="text-gray-300 text-lg max-w-md">
+            Scelerisque sed ultricies tristique. Mi in vivamus aliquam varius eu
+            felis. Id ultricies diam turpis mi tincidunt. Ut morbi sed urna
+            tempor imperdiet eu scelerisque egestas. Interdum mi orci
+            suspendisse in s... <span className="text-amber-600">See more</span>
+          </p>
         </div>
       </div>
-      <ListMovie />
-    </>
+    </div>
   );
 }

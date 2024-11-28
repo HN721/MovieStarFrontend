@@ -38,7 +38,6 @@ const MovieCreate = () => {
         },
       });
 
-      alert("Film berhasil ditambahkan!");
       console.log(response.data);
     } catch (error) {
       // Tampilkan pesan error yang lebih informatif
