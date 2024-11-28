@@ -60,10 +60,7 @@ const MovieList = () => {
                 <td className="px-6 py-4">{movie.durasi} Jam</td>
                 <td className="px-6 py-4">
                   <img
-                    src={`http://localhost:3000/${movie.gambar.replace(
-                      /\\/g,
-                      "/"
-                    )}`}
+                    src={movie.gambar}
                     alt={movie.judul}
                     className="w-16 h-auto"
                   />
