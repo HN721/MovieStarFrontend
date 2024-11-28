@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deleteFilm } from "../../../services/Film";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,6 +22,24 @@ const MovieList = () => {
 
     fetchData();
   }, []);
+
+  const handleEdit = (id) => {
+    navigate(`/admin/edit-movie/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Apakah Anda yakin ingin menghapus film ini?")) {
+      try {
+        await deleteFilm(id);
+        setMovies(movies.filter((movie) => movie.id !== id));
+        alert("Film berhasil dihapus.");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal menghapus film.");
+      }
+    }
+  };
+
   return (
     <div className="p-6 bg-gray-100 h-screen rounded-md ">
       <div className="flex justify-between pb-3 ">
@@ -31,23 +51,23 @@ const MovieList = () => {
           Tambah Film
         </button>
       </div>
-      <div class=" relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
             <tr>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Judul
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Deskripsi
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Durasi
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Poster
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Action
               </th>
             </tr>
@@ -65,13 +85,19 @@ const MovieList = () => {
                     className="w-16 h-auto"
                   />
                 </td>
-                <td className="px-6 py-4">
-                  <a
-                    href="#"
+                <td className="px-6 flex gap-2 py-4">
+                  <button
+                    onClick={() => handleEdit(movie._id)}
                     className="font-medium text-blue-600 hover:underline"
                   >
                     Edit
-                  </a>
+                  </button>
+                  <button
+                    onClick={() => handleDelete(movie._id)}
+                    className="font-medium text-red-600 hover:underline"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
