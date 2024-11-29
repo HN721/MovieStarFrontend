@@ -1,34 +1,36 @@
 import React from "react";
-import spiderman from "../assets/Spiderman.jpg";
+import Navbar from "../component/Navbar";
+import poster from "../assets/HAWKINS.jpg";
 
 export default function Home() {
   return (
-    <div
-      className="h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url(${spiderman})` }}
-    >
-      <div className="h-full w-full bg-black bg-opacity-50 flex items-center">
-        <div className="text-left pl-16">
-          <h1 className="text-white text-5xl font-poppins mb-4">
-            SpiderMan No Way Home
+    <>
+      <Navbar />
+      <div className="px-4 py-6">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <h1 className="font-mono font-bold text-3xl">Now Showing</h1>
+          <h1 className="font-mono text-sm p-2 rounded-2xl text-slate-400 border border-slate-900 cursor-pointer">
+            See More
           </h1>
-          <div className="flex gap-3 mb-3">
-            <span className="text-white text-lg mr-2">2021 |</span>
-            <span className="text-white text-lg mr-2">2h 28m</span>
-            <span className="text-white text-lg mr-2 px-2 bg-amber-500 rounded-sm">
-              Action
-            </span>
-            <span className="text-white text-lg mr-2">Adventure</span>
-            <span className="text-white text-lg mr-2">Fantasy</span>
-          </div>
-          <p className="text-gray-300 text-lg max-w-md">
-            Scelerisque sed ultricies tristique. Mi in vivamus aliquam varius eu
-            felis. Id ultricies diam turpis mi tincidunt. Ut morbi sed urna
-            tempor imperdiet eu scelerisque egestas. Interdum mi orci
-            suspendisse in s... <span className="text-amber-600">See more</span>
-          </p>
+        </div>
+
+        {/* Horizontal Scroll Container */}
+        <div className="flex gap-6 overflow-x-auto pt-5 scrollbar-hide">
+          {/* Movie Item */}
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="flex-shrink-0 w-40">
+              <img
+                src={poster}
+                alt="Movie Poster"
+                className="w-full h-60 object-cover rounded-lg shadow-xl"
+              />
+              <h1 className="mt-2 font-bold text-sm">Spiderman: No Way Home</h1>
+              <p className="text-yellow-500 text-sm">⭐ 9.1/10 IMDb</p>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

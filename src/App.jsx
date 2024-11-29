@@ -16,19 +16,9 @@ import Home from "./pages/Home";
 const App = () => {
   const token = useSelector((state) => state.auth.user);
 
-  // Rute-rute di mana Navbar tidak akan muncul
-  const hideNavbarPaths = ["/login", "/register", "/admin"];
-
-  // Cek apakah rute saat ini cocok dengan daftar rute yang disembunyikan
-  const shouldShowNavbar = !hideNavbarPaths.some((path) =>
-    location.pathname.startsWith(path)
-  );
-
   return (
     <>
       <Router>
-        {shouldShowNavbar && <Navbar />}
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

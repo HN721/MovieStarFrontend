@@ -1,26 +1,66 @@
-export default function Navbar() {
+import { useState } from "react";
+import { GoBell } from "react-icons/go";
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="fixed top-0 left-0 w-full flex justify-around mt-6 items-center  z-10">
-      <h1 className="font-poppins cursor-pointer text-4xl my-5 text-white">
-        Movie
-        <span className="text-white cursor-pointer bg-amber-500  mx-3 px-3 rounded-sm font-poppins text-4xl my-5">
-          Star
-        </span>
-      </h1>
-      <div className="flex gap-3">
-        <p className="text-white text-xl hover:text-yellow-500 cursor-pointer">
-          Home
-        </p>
-        <p className="text-white text-xl hover:text-yellow-500 cursor-pointer">
-          Movie
-        </p>
-        <p className="text-white text-xl hover:text-yellow-500 cursor-pointer">
-          Trending
-        </p>
-        <p className="text-white text-xl hover:text-yellow-500 cursor-pointer">
-          Login
-        </p>
+    <nav className=" p-4">
+      {/* Logo dan Hamburger Button */}
+      <div className="flex items-center justify-between">
+        <GoBell className="text-2xl" />
+        <h1 className=" text-lg font-bold">Movie Star</h1>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="block lg:hidden  focus:outline-none"
+        >
+          <svg
+            className="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            )}
+          </svg>
+        </button>
       </div>
-    </div>
+
+      {/* Navigasi */}
+      <ul
+        className={`lg:flex lg:space-x-4 mt-4 lg:mt-0 ${
+          isOpen ? "block" : "hidden"
+        }`}
+      >
+        <li className=" hover:text-gray-300">
+          <a href="#home">Home</a>
+        </li>
+        <li className=" hover:text-gray-300">
+          <a href="#my-order">My Order</a>
+        </li>
+        <li className=" hover:text-gray-300">
+          <a href="#profile">Profile</a>
+        </li>
+        <li className=" hover:text-gray-300">
+          <a href="#logout">Logout</a>
+        </li>
+      </ul>
+    </nav>
   );
 }
+
+export default Navbar;
