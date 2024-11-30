@@ -31,7 +31,7 @@ export default function Popular() {
             <p className="text-lg font-light  text-gray-500">⭐ 6.4/10 IMDb</p>
 
             {/* Tags */}
-            <div className="flex gap-1 ">
+            <div className="flex gap-1 pr-1 ">
               <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Horror
               </span>
