@@ -15,11 +15,11 @@ export default function Popular() {
       {/* List of Movies */}
       <div className="mt-4">
         {/* Movie Item */}
-        <div className="flex  gap-4 items-center border-b border-gray-200">
+        <div className="flex   items-center border-b border-gray-200">
           {/* Poster */}
           <img
             src={poster}
-            className="h-52 rounded-md shadow-md object-cover"
+            className="h-52 rounded-md shadow-md object-cover pr-4"
             alt="Movie poster"
           />
 
@@ -57,7 +57,7 @@ export default function Popular() {
           {/* Poster */}
           <img
             src={poster}
-            className="h-52 rounded-md shadow-md object-cover"
+            className="h-52 rounded-md shadow-md pr-4 object-cover"
             alt="Movie poster"
           />
 
