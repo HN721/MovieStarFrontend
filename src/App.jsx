@@ -12,7 +12,8 @@ import Register from "./component/Register";
 import Navbar from "./component/Navbar";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
-
+import DetailMovie from "./component/DetailMovie";
+import Seat from "./pages/Seat";
 const App = () => {
   const token = useSelector((state) => state.auth.user);
 
@@ -21,6 +22,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/detail" element={<DetailMovie />} />
+          <Route path="/ticket" element={<Seat />} />
+
           <Route
             path="/admin/*"
             element={token ? <AdminRoutes /> : <Navigate to="/login" />}

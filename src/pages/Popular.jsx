@@ -15,11 +15,11 @@ export default function Popular() {
       {/* List of Movies */}
       <div className="mt-4">
         {/* Movie Item */}
-        <div className="flex   items-center border-b border-gray-200">
+        <div className="flex  gap-4 items-center border-b border-gray-200">
           {/* Poster */}
           <img
             src={poster}
-            className="h-52 rounded-md shadow-md object-cover pr-4"
+            className="h-52 rounded-md shadow-md object-cover"
             alt="Movie poster"
           />
 
@@ -31,14 +31,14 @@ export default function Popular() {
             <p className="text-lg font-light  text-gray-500">⭐ 6.4/10 IMDb</p>
 
             {/* Tags */}
-            <div className="flex gap-1 pr-1 ">
-              <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
+            <div className="flex gap-2 ">
+              <span className="text-base font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Horror
               </span>
-              <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
+              <span className="text-base font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Mystery
               </span>
-              <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
+              <span className="text-base font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Thriller
               </span>
             </div>
@@ -57,7 +57,7 @@ export default function Popular() {
           {/* Poster */}
           <img
             src={poster}
-            className="h-52 rounded-md shadow-md pr-4 object-cover"
+            className="h-52 rounded-md shadow-md object-cover"
             alt="Movie poster"
           />
 
@@ -69,14 +69,14 @@ export default function Popular() {
             <p className="text-lg font-light  text-gray-500">⭐ 6.4/10 IMDb</p>
 
             {/* Tags */}
-            <div className="flex gap-1 ">
-              <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
+            <div className="flex gap-2 ">
+              <span className="text-base font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Horror
               </span>
-              <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
+              <span className="text-base font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Mystery
               </span>
-              <span className="text-sm font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
+              <span className="text-base font-light border rounded-full border-cyan-600 text-cyan-600 px-2">
                 Thriller
               </span>
             </div>
