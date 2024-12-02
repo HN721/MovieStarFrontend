@@ -18,16 +18,15 @@ export default function Order() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Order Submitted:", order);
-    // Tambahkan logika untuk mengirim data order ke server di sini
   };
 
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="min-h-screen bg-gray-100 px-4 pt-6">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-4 rounded shadow-md w-full max-w-sm"
+          className="bg-white p-4 rounded shadow-md w-full max-w-sm mx-auto"
         >
           <h2 className="text-2xl font-bold mb-4 text-center">Input Order</h2>
 
