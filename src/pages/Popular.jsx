@@ -1,7 +1,13 @@
 import React from "react";
 import poster from "../assets/kk.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function Popular() {
+  const navigate = useNavigate();
+
+  function handleSubmit() {
+    navigate("/detail");
+  }
   return (
     <div className="mt-6 ">
       {/* Title and "See More" */}
@@ -83,7 +89,10 @@ export default function Popular() {
 
             {/* Duration */}
             <p className="text-base text-gray-500 mt-2">1h 47m</p>
-            <button className="bg-cyan-600 text-white px-4 py-2 rounded-xl mt-4">
+            <button
+              onClick={handleSubmit}
+              className="bg-cyan-600 text-white px-4 py-2 rounded-xl mt-4"
+            >
               Booking Now
             </button>
           </div>

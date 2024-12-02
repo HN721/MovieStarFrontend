@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import Home from "./pages/Home";
 import DetailMovie from "./component/DetailMovie";
 import Seat from "./pages/Seat";
+import Order from "./pages/Order";
 const App = () => {
   const token = useSelector((state) => state.auth.user);
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/detail" element={<DetailMovie />} />
           <Route path="/ticket" element={<Seat />} />
+          <Route path="/order" element={<Order />} />
 
           <Route
             path="/admin/*"

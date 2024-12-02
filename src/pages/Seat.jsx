@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "./Fotter";
+import { useNavigate } from "react-router-dom";
 
 const Seat = () => {
   // Baris kursi
@@ -9,7 +10,10 @@ const Seat = () => {
   const cols = Array.from({ length: 5 }, (_, i) => i + 1);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const bookedSeats = ["A1", "B1", "C3", "D2", "E4"]; // Contoh kursi yang sudah dibooking
-
+  const navigate = useNavigate();
+  function handleSubmit() {
+    navigate("/order");
+  }
   const toggleSeat = (seat) => {
     if (selectedSeats.includes(seat)) {
       setSelectedSeats(selectedSeats.filter((s) => s !== seat));
@@ -77,7 +81,10 @@ const Seat = () => {
           <span className="text-lg font-bold">
             Rp {selectedSeats.length * 50000}
           </span>
-          <button className="bg-blue-500 px-6 py-2 rounded-full font-bold text-white hover:bg-blue-600">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-500 px-6 py-2 rounded-full font-bold text-white hover:bg-blue-600"
+          >
             Confirm
           </button>
         </div>
