@@ -7,6 +7,7 @@ import Bioskop from "../../component/admin/bioskop/Bioskop";
 import AddBioskop from "../../component/admin/bioskop/AddBioskop";
 import AddJadwal from "../../component/admin/Jadwal/AddJadwal";
 import Jadwal from "../../component/admin/Jadwal/Jadwal";
+import User from "../../component/admin/User/User";
 
 const AdminRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AdminRoutes = () => {
         <Route path="" element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="MovieList" element={<MovieList />} />
+        <Route path="user" element={<User />} />
         <Route path="add-movie" element={<MovieCreate />} />
         <Route path="bioskop" element={<Bioskop />} />
         <Route path="add-bioskop" element={<AddBioskop />} />
