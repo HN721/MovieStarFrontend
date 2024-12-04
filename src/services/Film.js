@@ -11,3 +11,11 @@ export async function deleteFilm(id) {
     );
   } catch (error) {}
 }
+export async function getFilm() {
+  try {
+    const response = await axios.get("http://localhost:3000/api/film/get-all");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

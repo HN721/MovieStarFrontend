@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import poster from "../assets/HAWKINS.jpg";
 import Popular from "./Popular";
 import Footer from "./Fotter";
+import axios from "axios";
+import { getFilm } from "../services/Film";
 
 export default function Home() {
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    const fetchFilm = async () => {
+      try {
+        const res = await getFilm();
+        setMovies(res);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchFilm();
+  }, []);
   return (
     <>
       <Navbar />
@@ -20,16 +35,16 @@ export default function Home() {
         {/* Horizontal Scroll Container */}
         <div className="flex gap-6 overflow-x-auto pt-5 scrollbar-hide">
           {/* Movie Item */}
-          {[...Array(5)].map((_, index) => (
-            <div key={index} className="flex-shrink-0 w-40">
+          {movies.map((movie) => (
+            <div key={movie.key} className="flex-shrink-0 w-40">
               <img
-                src={poster}
+                src={movie.gambar}
                 alt="Movie Poster"
                 className="w-full h-60 object-cover rounded-lg shadow-xl"
               />
-              <h1 className="mt-2 font-bold text-sm">Spiderman: No Way Home</h1>
+              <h1 className="mt-2 font-bold text-sm">{movie.judul}</h1>
               <p className="text-yellow-500 text-sm">
-                ⭐ 9.1/10 <span className="text-slate-400">IMDb</span>
+                {movie.durasi} <span className="text-slate-400">Menit</span>
               </p>
             </div>
           ))}

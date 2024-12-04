@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { getToken } from "../../../utils/getToken";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MovieCreate = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     judul: "",
     deskripsi: "",
@@ -39,6 +41,8 @@ const MovieCreate = () => {
       });
 
       console.log(response.data);
+      alert("Film berhasil ditambahkan!");
+      navigate("/admin");
     } catch (error) {
       // Tampilkan pesan error yang lebih informatif
       console.error(error.response?.data || error.message);
