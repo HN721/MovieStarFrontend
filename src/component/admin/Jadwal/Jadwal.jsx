@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getJadwalApi } from "../../../services/Jadwal";
+import { useDispatch } from "react-redux";
+import { jadwalAction } from "../../../redux/slice/Jadwal";
 
 export default function Jadwal() {
+  const dispatch = useDispatch();
+  const [jadwal, setJadwal] = useState([]);
+
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchApiJadwal = async () => {
+      try {
+        const res = await getJadwalApi();
+        setJadwal(res);
+        console.log(res);
+        dispatch(jadwalAction(res));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchApiJadwal();
+  }, []);
+
   return (
     <div className="bg-gray-100 h-screen p-6">
       <div className="flex justify-between mb-4">
@@ -30,10 +50,8 @@ export default function Jadwal() {
               <th scope="col" className="px-6 py-3">
                 Waktu
               </th>
-              <th>
-                <th scope="col" className="px-6 py-3">
-                  Harga
-                </th>
+              <th scope="col" className="px-6 py-3">
+                Harga
               </th>
               <th scope="col" className="px-6 py-3">
                 Action
@@ -41,11 +59,31 @@ export default function Jadwal() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colSpan="3" className="px-6 py-4 text-center">
-                Tidak ada Jadwal yang tersedia.
-              </td>
-            </tr>
+            {jadwal.length > 0 ? (
+              jadwal.map((jadwals, index) => (
+                <tr key={index} className="bg-white border-b">
+                  <td className="px-6 py-4">{jadwals.movie.judul}</td>
+                  <td className="px-6 py-4">{jadwals.bioskop.nama}</td>
+                  <td className="px-6 py-4">{jadwals.tanggal}</td>
+                  <td className="px-6 py-4">{jadwals.waktu}</td>
+                  <td className="px-6 py-4">{jadwals.harga}</td>
+                  <td className="px-6 flex gap-2 py-4">
+                    <button className="font-medium text-blue-600 hover:underline">
+                      Edit
+                    </button>
+                    <button className="font-medium text-red-600 hover:underline">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="px-6 py-4 text-center">
+                  Tidak ada Jadwal yang tersedia.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

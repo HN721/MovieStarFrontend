@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const JadwalSlice = createSlice({
   name: "jadwal",
   initialState: {
-    jadwal: null,
+    jadwal: [],
   },
   reducers: {
-    setJadwal: (state, action) => {
-      state.jadwal = action.payload;
+    jadwalAction: (state, action) => {
+      state.jadwal = action.payload; // Directly update the jadwal array
     },
   },
 });
-export const { setJadwal } = JadwalSlice.actions;
+export const { jadwalAction } = JadwalSlice.actions;
 const jadwalReducer = JadwalSlice.reducer;
 export default jadwalReducer;
