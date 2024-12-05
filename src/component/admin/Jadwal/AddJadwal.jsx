@@ -10,7 +10,7 @@ export default function AddJadwal() {
   const [bioskop, setBioskop] = useState([]);
   const [tanggal, setTanggal] = useState("");
   const [harga, setHarga] = useState(null);
-  const [waktu, setWaktu] = useState("");
+  const [waktu, setWaktu] = useState();
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -40,7 +40,13 @@ export default function AddJadwal() {
   async function handleAddJadwal(e) {
     e.preventDefault();
     try {
-      const res = await createJadwalApi(movie, bioskop, tanggal, waktu, harga);
+      const res = await createJadwalApi(
+        selectedMovie,
+        selectedBioskop,
+        tanggal,
+        waktu,
+        harga
+      );
       console.log(res);
     } catch (error) {
       return error;
@@ -60,11 +66,8 @@ export default function AddJadwal() {
             onChange={(e) => setSelectedBioskop(e.target.value)}
             className="mb-5"
           >
-            <option value="" disabled>
-              ---Pilih Bioskop----
-            </option>
             {bioskop.map((bioskop) => (
-              <option key={bioskop.id} value={bioskop.id}>
+              <option key={bioskop.id} value={bioskop._id}>
                 {bioskop.nama}
               </option>
             ))}
@@ -76,7 +79,7 @@ export default function AddJadwal() {
             className="mb-5 p-3"
           >
             {movie.map((movie) => (
-              <option key={movie.id} value={movie.id}>
+              <option key={movie.id} value={movie._id}>
                 {movie.judul}
               </option>
             ))}
@@ -84,17 +87,28 @@ export default function AddJadwal() {
           <label htmlFor="" className="mb-2 font-medium text-slate-900">
             Pilih Tanggal
           </label>
-          <input type="date" value={tanggal} className="mb-5 p-3" />
+          <input
+            type="text"
+            onChange={(e) => setTanggal(e.target.value)}
+            value={tanggal}
+            className="mb-5 p-3"
+          />
           <label htmlFor="" className="mb-2 font-medium text-slate-900">
             Pilih Waktu
           </label>
-          <input type="time" value={waktu} className="mb-5 p-3" />
+          <input
+            type="text"
+            onChange={(e) => setWaktu(e.target.value)}
+            value={waktu}
+            className="mb-5 p-3"
+          />
           <label htmlFor="" className="mb-2 font-medium text-slate-900">
             Masukan Harga
           </label>
           <input
             type="number"
             className="mb-5 p-3"
+            onChange={(e) => setHarga(e.target.value)}
             value={harga}
             placeholder="Masukan Harga"
           />
