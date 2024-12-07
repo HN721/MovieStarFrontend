@@ -1,27 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getJadwalApi } from "../../../services/Jadwal";
 import { useDispatch } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { getJadwalApi } from "../../../services/Jadwal";
 import { jadwalAction } from "../../../redux/slice/Jadwal";
 
 export default function Jadwal() {
   const dispatch = useDispatch();
-  const [jadwal, setJadwal] = useState([]);
-
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchApiJadwal = async () => {
-      try {
-        const res = await getJadwalApi();
-        setJadwal(res);
-        console.log(res);
-        dispatch(jadwalAction(res));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchApiJadwal();
-  }, []);
+
+  // Menggunakan useQuery untuk mengambil data
+  const {
+    data: jadwal,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["jadwal"],
+    queryFn: getJadwalApi,
+    onSuccess: (res) => {
+      dispatch(jadwalAction(res)); // Dispatch ke redux setelah data diambil
+    },
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className="bg-gray-100 h-screen p-6">

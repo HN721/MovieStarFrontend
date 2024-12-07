@@ -8,6 +8,7 @@ import AddBioskop from "../../component/admin/bioskop/AddBioskop";
 import AddJadwal from "../../component/admin/Jadwal/AddJadwal";
 import Jadwal from "../../component/admin/Jadwal/Jadwal";
 import User from "../../component/admin/User/User";
+import EditUser from "../../component/admin/User/EditUser";
 
 const AdminRoutes = () => {
   return (
@@ -19,6 +20,8 @@ const AdminRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="MovieList" element={<MovieList />} />
         <Route path="user" element={<User />} />
+        <Route path="user/edit-user/:id" element={<EditUser />} />
+
         <Route path="add-movie" element={<MovieCreate />} />
         <Route path="bioskop" element={<Bioskop />} />
         <Route path="add-bioskop" element={<AddBioskop />} />

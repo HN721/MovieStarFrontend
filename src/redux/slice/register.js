@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const regsiterSlice = createSlice({
   name: "register",
   initialState: {
+    _id: null,
     email: null,
     name: null,
     hp: null,
@@ -10,6 +11,7 @@ const regsiterSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
+      state._id = action.payload._id;
       state.email = action.payload.email;
       state.name = action.payload.name;
       state.hp = action.payload.hp;

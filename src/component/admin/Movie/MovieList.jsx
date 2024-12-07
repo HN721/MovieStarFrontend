@@ -1,44 +1,50 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteFilm } from "../../../services/Film";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteFilm, getFilm } from "../../../services/Film";
 
 const MovieList = () => {
-  const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/film/get-all"
-        );
-        setMovies(response.data);
-        console.log(response.data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
+  // Menggunakan useQuery untuk mengambil data film
+  const {
+    data: movies,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["movies"],
+    queryFn: getFilm,
+  });
 
-    fetchData();
-  }, []);
+  // Menggunakan useMutation untuk menghapus film
+  const mutation = useMutation({
+    mutationFn: deleteFilm,
+    onSuccess: () => {
+      // Refetch atau update cache setelah penghapusan berhasil
+      queryClient.invalidateQueries(["movies"]);
+      alert("Film berhasil dihapus.");
+    },
+    onError: (error) => {
+      console.error(error);
+      alert("Gagal menghapus film.");
+    },
+  });
 
   const handleEdit = (id) => {
     navigate(`/admin/edit-movie/${id}`);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     if (window.confirm("Apakah Anda yakin ingin menghapus film ini?")) {
-      try {
-        await deleteFilm(id);
-        setMovies(movies.filter((movie) => movie.id !== id));
-        alert("Film berhasil dihapus.");
-      } catch (error) {
-        console.error(error);
-        alert("Gagal menghapus film.");
-      }
+      mutation.mutate(id); // Menjalankan mutate untuk menghapus film
     }
   };
+
+  // Menangani loading dan error
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
 
   return (
     <div className="p-6 bg-gray-100 h-screen rounded-md ">

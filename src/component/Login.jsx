@@ -8,14 +8,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user); // Akses user dari Redux
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (user) {
-      navigate("/admin");
-    }
-  }, [user, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,6 +23,8 @@ const Login = () => {
     console.log(res.role);
     if (res.role === "admin") {
       navigate("/admin/dashboard");
+    } else if (res.role === "user") {
+      navigate("/");
     } else {
       navigate("/register");
     }

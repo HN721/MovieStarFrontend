@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getUser } from "../../../services/user";
+import { useDispatch } from "react-redux";
+import { akunAction } from "../../../redux/slice/akun";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export default function User() {
-  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await getUser();
-        setUsers(res);
-        console.log(res);
-      } catch (error) {
-        console.log("Cannot fetch User");
-      }
-    };
-    fetchUser();
-  }, []);
+  // Fetch user data with react-query
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+    onSuccess: (data) => {
+      dispatch(akunAction(data)); // Dispatch the action to update Redux state
+    },
+  });
 
-  // Calculate pagination
+  // Handle user edit navigation
+  const handleSelect = (id) => {
+    navigate(`/admin/user/edit-user/${id}`);
+  };
+
+  // Pagination calculations
   const totalPages = Math.ceil(users.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentUsers = users.slice(startIndex, startIndex + itemsPerPage);
@@ -31,6 +43,9 @@ export default function User() {
   const handleNext = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error.message}</p>;
 
   return (
     <div className="p-6 bg-gray-100 h-screen rounded-md">
@@ -63,13 +78,16 @@ export default function User() {
           </thead>
           <tbody>
             {currentUsers.map((user) => (
-              <tr key={user.id}>
+              <tr key={user._id}>
                 <td className="px-6 py-4">{user.name}</td>
                 <td className="px-6 py-4">{user.email}</td>
                 <td className="px-6 py-4">{user.hp}</td>
                 <td className="px-6 py-4">{user.role}</td>
                 <td className="px-6 py-4">
-                  <button className="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
+                  <button
+                    onClick={() => handleSelect(user._id)}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700"
+                  >
                     Edit
                   </button>
                 </td>
