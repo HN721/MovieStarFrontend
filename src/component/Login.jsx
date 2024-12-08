@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "../redux/slice/auth"; // Make sure to import login from authSlice
+import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../redux/slice/auth";
 import { useNavigate } from "react-router-dom";
 import LoginApi from "../services/Login";
 
@@ -8,30 +9,40 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  // Mutation untuk melakukan login
+  const loginMutation = useMutation({
+    mutationFn: (credentials) =>
+      LoginApi(credentials.email, credentials.password),
+    onSuccess: (res) => {
+      // Update Redux state dan localStorage
+      dispatch(loginAction(res));
+      localStorage.setItem("userInfo", JSON.stringify(res));
+
+      // Navigasi berdasarkan role user
+      if (res.role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (res.role === "user") {
+        navigate("/");
+      } else {
+        navigate("/register");
+      }
+    },
+    onError: (error) => {
+      console.error("Login failed:", error);
+      alert("Login gagal! Periksa email dan password Anda.");
+    },
+  });
+
+  // Handle form submit
+  const handleLogin = (e) => {
     e.preventDefault();
-    const res = await LoginApi(email, password);
-    // Dispatch login action to update Redux state
-    dispatch(loginAction(res));
-    localStorage.setItem("userInfo", JSON.stringify(res));
-
-    // This will update Redux state and localStorage
-
-    console.log(res.role);
-    if (res.role === "admin") {
-      navigate("/admin/dashboard");
-    } else if (res.role === "user") {
-      navigate("/");
-    } else {
-      navigate("/register");
-    }
+    loginMutation.mutate({ email, password });
   };
 
   return (
-    <div className="flex bg-cover bg-center  justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex bg-cover bg-center justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         <form onSubmit={handleLogin}>
@@ -70,8 +81,9 @@ const Login = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            disabled={loginMutation.isLoading} // Disable tombol saat loading
           >
-            Login
+            {loginMutation.isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

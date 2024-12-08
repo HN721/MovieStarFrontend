@@ -12,10 +12,12 @@ export async function getUser() {
     return response.data;
   } catch (error) {}
 }
-export async function updateUser(id) {
+export async function updateUser(id, userData) {
   try {
     const response = await axios.put(
       `http://localhost:3000/api/user/update/${id}`,
+      userData,
+
       {
         headers: {
           Authorization: `Bearer ${token}`,
