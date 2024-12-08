@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUser } from "../../../services/user";
 import { useDispatch } from "react-redux";
 import { akunAction } from "../../../redux/slice/akun";
@@ -18,6 +18,7 @@ export default function User() {
     isLoading,
     isError,
     error,
+    refetch, // Get the refetch function from useQuery
   } = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
@@ -25,6 +26,14 @@ export default function User() {
       dispatch(akunAction(data)); // Dispatch the action to update Redux state
     },
   });
+
+  // Trigger data refresh after login
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      // Or use your own logic to detect login
+      window.location.reload();
+    }
+  }, [refetch]);
 
   // Handle user edit navigation
   const handleSelect = (id) => {

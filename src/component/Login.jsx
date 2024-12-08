@@ -11,18 +11,20 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Mutation untuk melakukan login
+  // Mutation for login
   const loginMutation = useMutation({
     mutationFn: (credentials) =>
       LoginApi(credentials.email, credentials.password),
     onSuccess: (res) => {
-      // Update Redux state dan localStorage
+      // Update Redux state and localStorage
       dispatch(loginAction(res));
       localStorage.setItem("userInfo", JSON.stringify(res));
 
-      // Navigasi berdasarkan role user
+      // Navigate based on the user's role
       if (res.role === "admin") {
         navigate("/admin/dashboard");
+        // Refresh the page after successful login
+        window.location.reload();
       } else if (res.role === "user") {
         navigate("/");
       } else {
@@ -35,7 +37,6 @@ const Login = () => {
     },
   });
 
-  // Handle form submit
   const handleLogin = (e) => {
     e.preventDefault();
     loginMutation.mutate({ email, password });
@@ -81,7 +82,7 @@ const Login = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            disabled={loginMutation.isLoading} // Disable tombol saat loading
+            disabled={loginMutation.isLoading}
           >
             {loginMutation.isLoading ? "Logging in..." : "Login"}
           </button>

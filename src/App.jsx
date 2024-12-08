@@ -19,7 +19,7 @@ import Order from "./pages/Order";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const token = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => !!state.auth.user);
 
   return (
     <QueryClientProvider client={queryClient}>
