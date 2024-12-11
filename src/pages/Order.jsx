@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOneJadwalApi } from "../services/Jadwal";
+import { getOneSeat } from "../services/Seat";
 
 export default function Order() {
   const [movie, setMovie] = useState({});
   const [bioskop, setBioskop] = useState({});
   const [waktu, setWaktu] = useState({});
+  const [seat, setSeat] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -20,6 +22,13 @@ export default function Order() {
         console.error("Failed to fetch jadwal", error);
       }
     };
+    const fetchSeat = async () => {
+      try {
+        const res = await getOneSeat(id);
+        setSeat(res);
+      } catch (error) {}
+    };
+    fetchSeat();
     fetchJadwal();
   }, [id]);
 
@@ -40,8 +49,15 @@ export default function Order() {
           <p className="text-sm font-arimo font-semibold">{waktu.tanggal}</p>
         </div>
       </div>
-      <div>
-        <h1>Seat </h1>
+      <div className="mt-6 flex justify-between items-center">
+        <h1 className="text-2xl font-arimo font-bold">Seat:</h1>
+        <div className="flex flex-wrap justify-end gap-2">
+          {seat.map((item, index) => (
+            <p key={index} className="px-2 py-1 bg-gray-200 rounded">
+              {item.kursi}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );
