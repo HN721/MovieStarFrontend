@@ -25,7 +25,9 @@ export default function Footer() {
         {/* Account Icon */}
         <div className="flex flex-col items-center text-gray-500 hover:text-cyan-600">
           <RiAccountCircleLine size={24} />
-          <p className="text-xs mt-1">Account</p>
+          <p onClick={() => navigate("/account")} className="text-xs mt-1">
+            Account
+          </p>
         </div>
       </div>
     </div>

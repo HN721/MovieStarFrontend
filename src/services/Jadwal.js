@@ -27,3 +27,13 @@ export async function getJadwalApi() {
     return error;
   }
 }
+export async function getOneJadwalApi(id) {
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/api/jadwal/get-one/${id}`
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}

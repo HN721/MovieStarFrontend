@@ -14,6 +14,8 @@ import Home from "./pages/Home";
 import DetailMovie from "./component/DetailMovie";
 import Seat from "./pages/Seat";
 import Order from "./pages/Order";
+import JadwalList from "./pages/ListJadwal";
+import Account from "./component/User/Account";
 
 // Create an instance of QueryClient
 const queryClient = new QueryClient();
@@ -28,9 +30,11 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/detail" element={<DetailMovie />} />
-          <Route path="/ticket" element={<Seat />} />
-          <Route path="/order" element={<Order />} />
+          <Route path="/detail/:id" element={<DetailMovie />} />
+          <Route path="/detail/jadwal" element={<JadwalList />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/ticket/:id" element={<Seat />} />
+          <Route path="/order/:id" element={<Order />} />
 
           <Route
             path="/admin/*"

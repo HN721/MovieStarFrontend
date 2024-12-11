@@ -5,9 +5,14 @@ import Popular from "./Popular";
 import Footer from "./Fotter";
 import axios from "axios";
 import { getFilm } from "../services/Film";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
+  function handleSubmit(id) {
+    navigate(`/detail/${id}`);
+  }
   useEffect(() => {
     const fetchFilm = async () => {
       try {
@@ -36,9 +41,10 @@ export default function Home() {
         <div className="flex gap-6 overflow-x-auto pt-5 scrollbar-hide">
           {/* Movie Item */}
           {movies.map((movie) => (
-            <div key={movie.key} className="flex-shrink-0 w-40">
+            <div key={movie._id} className="flex-shrink-0 w-40">
               <img
                 src={movie.gambar}
+                onClick={() => handleSubmit(movie._id)}
                 alt="Movie Poster"
                 className="w-full h-60 object-cover rounded-lg shadow-xl"
               />

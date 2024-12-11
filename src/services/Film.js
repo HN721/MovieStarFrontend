@@ -19,3 +19,12 @@ export async function getFilm() {
     console.log(error);
   }
 }
+
+export async function getOne(id) {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/film/get-one/${id}`
+    );
+    return response.data;
+  } catch (error) {}
+}
