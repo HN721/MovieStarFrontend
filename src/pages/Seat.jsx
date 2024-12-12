@@ -4,8 +4,11 @@ import Footer from "./Fotter";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { getToken } from "../utils/getToken";
+import { useDispatch } from "react-redux";
+import { setKursi } from "../redux/slice/Seat";
 
 const Seat = () => {
+  const dispatch = useDispatch();
   const token = getToken();
   const { id } = useParams(); // ID Jadwal
   const rows = ["A", "B", "C", "D", "E"];
@@ -59,6 +62,7 @@ const Seat = () => {
   const handleSubmit = async () => {
     const jadwal = id; // ID Jadwal
     const status = "booked"; // Status kursi yang dipilih
+    dispatch(setKursi(selectedSeats));
 
     try {
       // Kirim request untuk setiap kursi yang dipilih
