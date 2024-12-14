@@ -16,6 +16,7 @@ import Seat from "./pages/Seat";
 import Order from "./pages/Order";
 import JadwalList from "./pages/ListJadwal";
 import Account from "./component/User/Account";
+import Ticket from "./pages/User/Ticket";
 
 // Create an instance of QueryClient
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/ticket/:id" element={<Seat />} />
           <Route path="/order/:id" element={<Order />} />
+          <Route path="/account/ticket" element={<Ticket />} />
 
           <Route
             path="/admin/*"

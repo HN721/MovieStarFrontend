@@ -8,12 +8,14 @@ import ATMLogo from "../assets/atm.png";
 import VisaLogo from "../assets/visa.png";
 import Navbar from "../component/Navbar";
 import Footer from "./Fotter";
+import { useSelector } from "react-redux";
 
 export default function Order() {
+  const seat = useSelector((state) => state.kursi);
+  console.log(seat);
   const [movie, setMovie] = useState({});
   const [bioskop, setBioskop] = useState({});
   const [waktu, setWaktu] = useState({});
-  const [seat, setSeat] = useState([]);
   const [total, setTotal] = useState(0);
   const { id } = useParams();
 
@@ -32,7 +34,6 @@ export default function Order() {
     const fetchSeat = async () => {
       try {
         const res = await getOneSeat(id);
-        setSeat(res);
         console.log(res);
       } catch (error) {
         console.error("Failed to fetch seats", error);
@@ -78,11 +79,12 @@ export default function Order() {
         <div className="mt-6 flex justify-between items-center">
           <h1 className="text-2xl font-arimo font-bold">Seat:</h1>
           <div className="flex flex-wrap justify-end gap-2">
-            {seat.map((item, index) => (
-              <p key={index} className="px-2 py-1 bg-gray-200 rounded">
-                {item.kursi}
-              </p>
-            ))}
+            {seat.kursi &&
+              seat.kursi.map((item, index) => (
+                <p key={index} className="px-2 py-1 bg-gray-200 rounded">
+                  {item}
+                </p>
+              ))}
           </div>
         </div>
         <div className="flex items-center border border-slate-500 rounded-lg p-2 mb-4 mt-4">
