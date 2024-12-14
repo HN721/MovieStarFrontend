@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getOneJadwalApi } from "../services/Jadwal";
 import { getOneSeat } from "../services/Seat";
 import ZaloPayLogo from "../assets/zalo.png";
@@ -12,12 +12,15 @@ import { useSelector } from "react-redux";
 
 export default function Order() {
   const seat = useSelector((state) => state.kursi);
-  console.log(seat);
+  const navigate = useNavigate();
   const [movie, setMovie] = useState({});
   const [bioskop, setBioskop] = useState({});
   const [waktu, setWaktu] = useState({});
   const [total, setTotal] = useState(0);
   const { id } = useParams();
+  function handleNext(id) {
+    navigate(`/account/ticket/${id}`);
+  }
 
   useEffect(() => {
     const fetchJadwal = async () => {
@@ -136,12 +139,15 @@ export default function Order() {
           </div>
         </div>
         <div>
-          <button className="w-full bg-yellow-500 hover:bg-yellow-400 p-4 rounded-lg text-slate-50">
+          <button
+            onClick={() => handleNext(id)}
+            className="w-full bg-yellow-500 hover:bg-yellow-400 p-4 rounded-lg text-slate-50"
+          >
             Order Now!
           </button>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

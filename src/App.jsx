@@ -17,13 +17,15 @@ import Order from "./pages/Order";
 import JadwalList from "./pages/ListJadwal";
 import Account from "./component/User/Account";
 import Ticket from "./pages/User/Ticket";
+import AuthRoute from "./component/auth/AuthRoute";
+import { getToken } from "./utils/getToken";
+import AuthorizationRoute from "./component/auth/AuthorizationRoute";
 
 // Create an instance of QueryClient
 const queryClient = new QueryClient();
 
 const App = () => {
-  const token = useSelector((state) => !!state.auth.user);
-
+  const token = getToken();
   return (
     <QueryClientProvider client={queryClient}>
       {" "}
@@ -31,16 +33,50 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/detail/:id" element={<DetailMovie />} />
-          <Route path="/detail/jadwal" element={<JadwalList />} />
+          <Route
+            path="/detail/:id"
+            element={
+              <AuthRoute>
+                <DetailMovie />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/detail/jadwal"
+            element={
+              <AuthRoute>
+                <JadwalList />
+              </AuthRoute>
+            }
+          />
           <Route path="/account" element={<Account />} />
-          <Route path="/ticket/:id" element={<Seat />} />
-          <Route path="/order/:id" element={<Order />} />
-          <Route path="/account/ticket" element={<Ticket />} />
+          <Route
+            path="/ticket/:id"
+            element={
+              <AuthRoute>
+                <Seat />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <AuthRoute>
+                <Order />
+              </AuthRoute>
+            }
+          />
+          <Route path="/account/ticket/:id" element={<Ticket />} />
 
           <Route
             path="/admin/*"
-            element={token ? <AdminRoutes /> : <Navigate to="/login" />}
+            element={
+              <AuthRoute>
+                <AuthorizationRoute>
+                  <AdminRoutes />
+                </AuthorizationRoute>
+              </AuthRoute>
+            }
           />
           <Route path="/login" element={token ? <AdminRoutes /> : <Login />} />
           <Route
