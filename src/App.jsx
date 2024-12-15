@@ -20,6 +20,7 @@ import Ticket from "./pages/User/Ticket";
 import AuthRoute from "./component/auth/AuthRoute";
 import { getToken } from "./utils/getToken";
 import AuthorizationRoute from "./component/auth/AuthorizationRoute";
+import OrderAccount from "./pages/User/OrderAccount";
 
 // Create an instance of QueryClient
 const queryClient = new QueryClient();
@@ -46,6 +47,14 @@ const App = () => {
             element={
               <AuthRoute>
                 <JadwalList />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="account/order"
+            element={
+              <AuthRoute>
+                <OrderAccount />
               </AuthRoute>
             }
           />

@@ -19,7 +19,12 @@ export default function Footer() {
         {/* Tickets Icon */}
         <div className="flex flex-col items-center text-gray-500 hover:text-cyan-600">
           <RiTicketLine size={24} />
-          <p className="text-xs mt-1">Tickets</p>
+          <p
+            onClick={() => navigate("/account/order")}
+            className="text-xs mt-1"
+          >
+            Tickets
+          </p>
         </div>
 
         {/* Account Icon */}

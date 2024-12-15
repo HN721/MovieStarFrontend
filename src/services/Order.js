@@ -19,3 +19,17 @@ export async function addOrder(jadwal, total) {
     return response.data;
   } catch (error) {}
 }
+export async function getOneOrder(id) {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/order/get-one/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+}
