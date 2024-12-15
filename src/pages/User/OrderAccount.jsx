@@ -6,13 +6,15 @@ import Footer from "../Fotter";
 
 export default function OrderAccount() {
   const [nama, setNama] = useState("");
+  const [movie, setMovie] = useState("");
   const [jadwal, setJadwal] = useState("");
   const user = useSelector((state) => state.auth.user.id);
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const res = await getOneOrder(user);
-        // setNama(res.user.name)
+        setMovie(res.jadwal.movie.judul);
+        setNama(res.user.name);
         setJadwal(res.jadwal.bioskop.nama);
         console.log(res);
       } catch (e) {
@@ -27,8 +29,9 @@ export default function OrderAccount() {
       <div className="px-6">
         <h1 className="text-2xl font-arimo text-center mt-5">Ticket Saya</h1>
         <div className="bg-slate-400 w-full">
-          <h1>{jadwal}</h1>
-          <p></p>
+          <h1>{movie}</h1>
+          <p>{jadwal}</p>
+          <p>{nama}</p>
         </div>
       </div>
       <Footer />
