@@ -3,11 +3,11 @@ import { getToken } from "../utils/getToken";
 
 const token = getToken();
 
-export async function addOrder(jadwal, user, total) {
+export async function addOrder(jadwal, total) {
   try {
     const response = await axios.post(
       "http://localhost:3000/api/order/create",
-      { jadwal, user, total },
+      { jadwal, total },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -15,6 +15,7 @@ export async function addOrder(jadwal, user, total) {
         },
       }
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {}
 }
