@@ -54,7 +54,7 @@ export default function Order() {
     } catch (error) {
       return error;
     }
-    // navigate(`/account/ticket/${id}`);
+    navigate(`/account/ticket/${id}`);
   }
   const handleTotalChange = (event) => {
     setTotal(Number(event.target.value));
