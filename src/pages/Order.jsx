@@ -9,23 +9,27 @@ import VisaLogo from "../assets/visa.png";
 import Navbar from "../component/Navbar";
 import Footer from "./Fotter";
 import { useSelector } from "react-redux";
+import { addOrder } from "../services/Order";
 
 export default function Order() {
+  const user = useSelector((state) => state.auth.user.id);
+  console.log(user);
   const seat = useSelector((state) => state.kursi);
+  const [jadwalId, setJadwalId] = useState(null);
   const navigate = useNavigate();
   const [movie, setMovie] = useState({});
   const [bioskop, setBioskop] = useState({});
   const [waktu, setWaktu] = useState({});
   const [total, setTotal] = useState(0);
+
   const { id } = useParams();
-  function handleNext(id) {
-    navigate(`/account/ticket/${id}`);
-  }
 
   useEffect(() => {
     const fetchJadwal = async () => {
       try {
         const res = await getOneJadwalApi(id);
+        setJadwalId(res._id);
+        console.log(res);
         setMovie(res.movie);
         setBioskop(res.bioskop);
         setWaktu(res);
@@ -46,7 +50,15 @@ export default function Order() {
     fetchSeat();
     fetchJadwal();
   }, [id]);
-
+  async function handleNext(id) {
+    try {
+      const data = await addOrder(total, user, jadwalId);
+      console.log(data);
+    } catch (error) {
+      return error;
+    }
+    navigate(`/account/ticket/${id}`);
+  }
   const handleTotalChange = (event) => {
     setTotal(Number(event.target.value));
   };

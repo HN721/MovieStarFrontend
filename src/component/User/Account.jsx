@@ -1,7 +1,17 @@
 import React from "react";
 import Footer from "../../pages/Fotter";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../redux/slice/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Account() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logoutAction()); // Hapus dari Redux
+    localStorage.removeItem("userInfo"); // Hapus dari LocalStorage
+    navigate("/");
+  };
   return (
     <>
       <div className="min-h-screen bg-blue-50 flex items-center justify-center">
@@ -100,7 +110,10 @@ export default function Account() {
 
           {/* Sign Out Button */}
           <div className="mt-8">
-            <button className="w-full bg-red-500 text-white py-2 rounded-md shadow-md hover:bg-red-600">
+            <button
+              onClick={() => handleLogout()}
+              className="w-full bg-red-500 text-white py-2 rounded-md shadow-md hover:bg-red-600"
+            >
               Sign Out
             </button>
           </div>
