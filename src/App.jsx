@@ -81,9 +81,10 @@ const App = () => {
             path="/admin/*"
             element={
               <AuthRoute>
-                <AuthorizationRoute>
-                  <AdminRoutes />
-                </AuthorizationRoute>
+                <AdminRoutes />
+                {/* <AuthorizationRoute>
+                 
+                </AuthorizationRoute> */}
               </AuthRoute>
             }
           />
