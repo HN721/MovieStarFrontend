@@ -68,7 +68,7 @@ const Seat = () => {
       // Kirim request untuk setiap kursi yang dipilih
       const promises = selectedSeats.map((kursi) =>
         axios.post(
-          "http://localhost:3000/api/seat/create",
+          "https://moviestar-iota.vercel.app/api/seat/create",
           { jadwal, kursi, status },
           {
             headers: {

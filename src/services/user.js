@@ -4,18 +4,21 @@ import { getToken } from "../utils/getToken";
 const token = getToken();
 export async function getUser() {
   try {
-    const response = await axios.get("http://localhost:3000/api/user/get-all", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      "https://moviestar-iota.vercel.app/api/user/get-all",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {}
 }
 export async function updateUser(id, userData) {
   try {
     const response = await axios.put(
-      `http://localhost:3000/api/user/update/${id}`,
+      `https://moviestar-iota.vercel.app/api/user/update/${id}`,
       userData,
 
       {
@@ -30,7 +33,7 @@ export async function updateUser(id, userData) {
 export async function findOneUser(id) {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/user/find/${id}`,
+      `https://moviestar-iota.vercel.app/api/user/find/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +46,7 @@ export async function findOneUser(id) {
 export async function deleteUser(id) {
   try {
     const response = await axios.delete(
-      `http://localhost:3000/api/user/delete/${id}`,
+      `https://moviestar-iota.vercel.app/api/user/delete/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

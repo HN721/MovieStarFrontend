@@ -6,7 +6,7 @@ const token = getToken();
 export async function addOrder(jadwal, total) {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/order/create",
+      "https://moviestar-iota.vercel.app/api/order/create",
       { jadwal, total },
       {
         headers: {
@@ -22,7 +22,7 @@ export async function addOrder(jadwal, total) {
 export async function getOneOrder(id) {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/order/get-one/${id}`,
+      `https://moviestar-iota.vercel.app/api/order/get-one/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

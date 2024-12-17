@@ -30,7 +30,7 @@ const MovieCreate = () => {
     form.append("durasi", formData.durasi);
     form.append("gambar", formData.gambar);
     const token = getToken();
-    const url = "http://localhost:3000/api/film/create";
+    const url = "https://moviestar-iota.vercel.app/api/film/create";
 
     try {
       const response = await axios.post(url, form, {

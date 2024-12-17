@@ -6,14 +6,16 @@ const token = getToken();
 export async function deleteFilm(id) {
   try {
     const response = await axios.delete(
-      `http://localhost:3000/api/film/delete/${id}`,
+      `https://moviestar-iota.vercel.app/api/film/delete/${id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
   } catch (error) {}
 }
 export async function getFilm() {
   try {
-    const response = await axios.get("http://localhost:3000/api/film/get-all");
+    const response = await axios.get(
+      "https://moviestar-iota.vercel.app/api/film/get-all"
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -23,7 +25,7 @@ export async function getFilm() {
 export async function getOne(id) {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/film/get-one/${id}`
+      `https://moviestar-iota.vercel.app/api/film/get-one/${id}`
     );
     return response.data;
   } catch (error) {}

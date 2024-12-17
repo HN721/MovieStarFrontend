@@ -6,7 +6,7 @@ const token = getToken();
 export async function bioskopApi(nama, lokasi) {
   try {
     const response = await axios.post(
-      " http://localhost:3000/api/bioskop/create",
+      "https://moviestar-iota.vercel.app/api/bioskop/create",
       {
         nama,
         lokasi,
@@ -26,7 +26,7 @@ export async function bioskopApi(nama, lokasi) {
 export async function getBioskopApi() {
   try {
     const response = await axios.get(
-      "http://localhost:3000/api/bioskop/get-all",
+      "https://moviestar-iota.vercel.app/api/bioskop/get-all",
       {
         headers: {
           Authorization: `Bearer ${token}`,

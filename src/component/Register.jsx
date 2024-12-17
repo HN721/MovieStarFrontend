@@ -14,7 +14,7 @@ const Register = () => {
     e.preventDefault(); // Mencegah reload halaman
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/user/register",
+        "https://moviestar-iota.vercel.app/api/user/register",
         {
           name,
           email,

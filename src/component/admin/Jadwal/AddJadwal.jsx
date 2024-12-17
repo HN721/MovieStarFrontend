@@ -16,7 +16,7 @@ export default function AddJadwal() {
     const fetchMovie = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/film/get-all"
+          "https://moviestar-iota.vercel.app/api/film/get-all"
         );
         setMovie(response.data);
         console.log(response.data);

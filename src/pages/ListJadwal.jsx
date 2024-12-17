@@ -13,7 +13,7 @@ const JadwalList = () => {
     const fetchJadwal = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/jadwal/get-all"
+          "https://moviestar-iota.vercel.app/api/jadwal/get-all"
         );
         setJadwal(response.data);
         setLoading(false);

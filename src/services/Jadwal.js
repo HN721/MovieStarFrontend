@@ -5,7 +5,7 @@ const token = getToken();
 export async function createJadwalApi(movie, bioskop, tanggal, waktu, harga) {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/jadwal/create",
+      "https://moviestar-iota.vercel.app/api/jadwal/create",
       { movie, bioskop, tanggal, waktu, harga },
       {
         headers: {
@@ -21,7 +21,9 @@ export async function createJadwalApi(movie, bioskop, tanggal, waktu, harga) {
 }
 export async function getJadwalApi() {
   try {
-    const res = await axios.get("http://localhost:3000/api/jadwal/get-all");
+    const res = await axios.get(
+      "https://moviestar-iota.vercel.app/api/jadwal/get-all"
+    );
     return res.data;
   } catch (error) {
     return error;
@@ -30,7 +32,7 @@ export async function getJadwalApi() {
 export async function getOneJadwalApi(id) {
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/jadwal/get-one/${id}`
+      `https://moviestar-iota.vercel.app/api/jadwal/get-one/${id}`
     );
     return res.data;
   } catch (error) {
