@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { getUser } from "../../../services/user";
 
 const Dashboard = () => {
-  // const data = useSelector((state) => state.auth.user.nama);
+  const data = useSelector((state) => state.auth.user.nama);
   const [total, setTotal] = useState(null);
   useEffect(() => {
     const fetchApiUser = async () => {
