@@ -88,7 +88,7 @@ const App = () => {
               </AuthRoute>
             }
           />
-          <Route path="/login" element={token ? <AdminRoutes /> : <Login />} />
+          <Route path="/login" element={<Login />} />
           <Route
             path="/register"
             element={token ? <AdminRoutes /> : <Register />}
