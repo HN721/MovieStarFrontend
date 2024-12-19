@@ -26,7 +26,19 @@ const Seat = () => {
     data: bookedSeats = [],
     isLoading,
     error,
-  } = useQuery({ queryKey: ["bookedSeats", id], queryFn: getOneSeat(id) });
+  } = useQuery(
+    ["bookedSeats", id],
+    () => getOneSeat(id), // Ensure this is a function
+    {
+      select: (response) =>
+        response.data
+          .filter((seat) => seat.status === "booked")
+          .map((seat) => seat.kursi),
+      onError: () => {
+        setErrorMessage("Failed to load booked seats. Please try again.");
+      },
+    }
+  );
 
   console.log(bookedSeats);
   // Toggle pemilihan kursi
