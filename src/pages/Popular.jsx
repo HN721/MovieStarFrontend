@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { getFilm } from "../services/Film";
 
 export default function Popular() {
   const navigate = useNavigate();
-  const [movies, setMovies] = useState([]);
+  const [expandedMovieId, setExpandedMovieId] = useState(null);
 
-  useEffect(() => {
-    const fetchFilm = async () => {
-      try {
-        const res = await getFilm();
-        setMovies(res);
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchFilm();
-  }, []);
+  // Fetch data using useQuery
+  const {
+    data: movies = [],
+    isLoading,
+    error,
+  } = useQuery(["popularFilms"], getFilm);
 
   const truncateText = (text, length) => {
     if (text.length > length) {
@@ -26,11 +21,17 @@ export default function Popular() {
     return text;
   };
 
-  const [expandedMovieId, setExpandedMovieId] = useState(null);
-
   const toggleDescription = (id) => {
     setExpandedMovieId(expandedMovieId === id ? null : id);
   };
+
+  if (isLoading) {
+    return <p>Loading movies...</p>;
+  }
+
+  if (error) {
+    return <p>Failed to load movies. Please try again later.</p>;
+  }
 
   return (
     <div className="mt-6">

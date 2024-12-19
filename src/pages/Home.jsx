@@ -3,28 +3,22 @@ import Navbar from "../component/Navbar";
 import poster from "../assets/HAWKINS.jpg";
 import Popular from "./Popular";
 import Footer from "./Fotter";
-import axios from "axios";
 import { getFilm } from "../services/Film";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [movies, setMovies] = useState([]);
   function handleSubmit(id) {
     navigate(`/detail/${id}`);
   }
-  useEffect(() => {
-    const fetchFilm = async () => {
-      try {
-        const res = await getFilm();
-        setMovies(res);
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchFilm();
-  }, []);
+  const { data: movies = [], isLoading, error } = useQuery(["Film"], getFilm);
+  if (isLoading) {
+    <p>Loading</p>;
+  }
+  if (error) {
+    <p>Error Failed to catch Movie</p>;
+  }
   return (
     <>
       <Navbar />
