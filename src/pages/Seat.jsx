@@ -26,15 +26,18 @@ const Seat = () => {
     data: bookedSeats = [],
     isLoading,
     error,
-  } = useQuery(["bookedSeats", id], () => getOneSeat(id), {
-    select: (response) =>
-      response.data
-        .filter((seat) => seat.status === "booked")
-        .map((seat) => seat.kursi),
-    onError: () => {
-      setErrorMessage("Failed to load booked seats. Please try again.");
-    },
-  });
+  } = useQuery(
+    { queryKey: ["bookedSeats", id], queryFn: getOneSeat(id) },
+    {
+      select: (response) =>
+        response.data
+          .filter((seat) => seat.status === "booked")
+          .map((seat) => seat.kursi),
+      onError: () => {
+        setErrorMessage("Failed to load booked seats. Please try again.");
+      },
+    }
+  );
 
   // Toggle pemilihan kursi
   const toggleSeat = (seat) => {
