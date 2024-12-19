@@ -22,19 +22,19 @@ const Seat = () => {
   const navigate = useNavigate();
 
   // Fetch data kursi yang sudah dibooking menggunakan useQuery
-  const { data, isLoading, error } = useQuery(
-    ["bookedSeats", id],
-    () => getOneSeat(id),
-    {
-      select: (response) =>
-        response.data
-          .filter((seat) => seat.status === "booked")
-          .map((seat) => seat.kursi),
-      onError: () => {
-        setErrorMessage("Failed to load booked seats. Please try again.");
-      },
-    }
-  );
+  const {
+    data: bookedSeats = [],
+    isLoading,
+    error,
+  } = useQuery(["bookedSeats", id], () => getOneSeat(id), {
+    select: (response) =>
+      response.data
+        .filter((seat) => seat.status === "booked")
+        .map((seat) => seat.kursi),
+    onError: () => {
+      setErrorMessage("Failed to load booked seats. Please try again.");
+    },
+  });
 
   // Toggle pemilihan kursi
   const toggleSeat = (seat) => {
@@ -91,8 +91,6 @@ const Seat = () => {
       </div>
     );
   }
-
-  const bookedSeats = data || [];
 
   return (
     <>
