@@ -13,6 +13,5 @@ export async function getOneSeat(id) {
         },
       }
     );
-    return response.data;
   } catch (error) {}
 }

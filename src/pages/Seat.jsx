@@ -37,7 +37,8 @@ const Seat = () => {
       }
     };
     fetchBookedSeats();
-  }, []);
+  }, [id, token]);
+  console.log(bookedSeats);
 
   // Toggle pemilihan kursi
   const toggleSeat = (seat) => {
