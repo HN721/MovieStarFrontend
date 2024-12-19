@@ -19,20 +19,20 @@ export default function Footer() {
         {/* Tickets Icon */}
         <div className="flex flex-col items-center text-gray-500 hover:text-cyan-600">
           <RiTicketLine size={24} />
-          <p
+          <button
             onClick={() => navigate("/account/order")}
             className="text-xs mt-1"
           >
             Tickets
-          </p>
+          </button>
         </div>
 
         {/* Account Icon */}
         <div className="flex flex-col items-center text-gray-500 hover:text-cyan-600">
           <RiAccountCircleLine size={24} />
-          <p onClick={() => navigate("/account")} className="text-xs mt-1">
+          <button onClick={() => navigate("/account")} className="text-xs mt-1">
             Account
-          </p>
+          </button>
         </div>
       </div>
     </div>

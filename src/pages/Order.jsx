@@ -63,7 +63,7 @@ export default function Order() {
   return (
     <>
       <Navbar />
-      <div className="px-5">
+      <div className="px-5 pb-16">
         <div className="flex bg-slate-300 rounded-lg p-4">
           <img
             src={movie.gambar || "default-movie-image.png"}
@@ -157,6 +157,7 @@ export default function Order() {
         </div>
       </div>
       {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

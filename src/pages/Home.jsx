@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="px-4 py-6">
+      <div className="px-4 pb-16 py-6">
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-2xl">Now Showing</h1>

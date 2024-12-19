@@ -42,7 +42,7 @@ export default function DetailMovie() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 pb-16">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Poster Movie */}
           <div className="flex-none w-full md:w-1/3">
