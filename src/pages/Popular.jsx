@@ -12,7 +12,10 @@ export default function Popular() {
     data: movies = [],
     isLoading,
     error,
-  } = useQuery(["popularFilms"], getFilm);
+  } = useQuery({
+    queryKey: ["PopularFilm"],
+    queryFn: getFilm,
+  });
 
   const truncateText = (text, length) => {
     if (text.length > length) {

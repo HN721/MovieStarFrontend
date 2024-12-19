@@ -15,7 +15,14 @@ export default function Home() {
   }
 
   // Fetch movies using useQuery
-  const { data: movies = [], isLoading, error } = useQuery(["Film"], getFilm);
+  const {
+    data: movies = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["Film"],
+    queryFn: getFilm,
+  });
 
   // Handle loading and error states
   if (isLoading) {
