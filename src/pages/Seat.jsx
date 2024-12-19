@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "./Fotter";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,15 +6,7 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
-import { useQuery } from "@tanstack/react-query";
-
-// Fetch booked seats using TanStack React Query
-const fetchBookedSeats = async (id) => {
-  const response = await axios.get(
-    `https://moviestar-iota.vercel.app/api/seat/${id}`
-  );
-  return response.data;
-};
+import { getOneSeat } from "../services/Seat";
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -24,27 +16,29 @@ const Seat = () => {
   const cols = Array.from({ length: 5 }, (_, i) => i + 1);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [bookedSeats, setBookedSeats] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
 
-  // Fetch booked seats with useQuery
-  const {
-    data: bookedSeats,
-    error,
-    isLoading,
-  } = useQuery(["bookedSeats", id], () => fetchBookedSeats(id), {
-    onSuccess: (data) => {
-      // Filter booked seats based on their 'status'
-      const bookedSeatNames = data
-        .filter((seat) => seat.status === "booked")
-        .map((seat) => seat.kursi);
-      setBookedSeats(bookedSeatNames);
-    },
-    onError: () => {
-      setErrorMessage("Failed to load booked seats. Please try again.");
-    },
-  });
+  // Fetch data kursi yang sudah dibooking
+  useEffect(() => {
+    const fetchBookedSeats = async () => {
+      try {
+        const response = await getOneSeat(id);
+        // Filter booked seats based on their 'status'
+        const booked = response.data.filter((seat) => seat.status === "booked");
+        // Store only the seat identifiers for easy comparison
+        const bookedSeatNames = booked.map((seat) => seat.kursi);
+        setBookedSeats(bookedSeatNames);
+      } catch (error) {
+        console.error("Failed to fetch booked seats:", error.message);
+        setErrorMessage("Failed to load booked seats. Please try again.");
+      }
+    };
+    fetchBookedSeats();
+  }, [id, token]);
+  console.log(bookedSeats);
 
   // Toggle pemilihan kursi
   const toggleSeat = (seat) => {
@@ -89,14 +83,6 @@ const Seat = () => {
       );
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error loading seats: {error.message}</div>;
-  }
 
   return (
     <>
