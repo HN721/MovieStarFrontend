@@ -1,175 +1,93 @@
 import React, { useState } from "react";
-import Navbar from "../component/Navbar";
-import Footer from "./Fotter";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { getToken } from "../utils/getToken";
-import { useDispatch } from "react-redux";
-import { setKursi } from "../redux/slice/Seat";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getOneSeat } from "../services/Seat";
+import { getFilm } from "../services/Film";
 
-// Fetch booked seats using TanStack React Query
-
-const Seat = () => {
-  const dispatch = useDispatch();
-  const token = getToken();
-  const { id } = useParams(); // ID Jadwal
-  const rows = ["A", "B", "C", "D", "E"];
-  const cols = Array.from({ length: 5 }, (_, i) => i + 1);
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(null);
-
+export default function Popular() {
   const navigate = useNavigate();
+  const [expandedMovieId, setExpandedMovieId] = useState(null);
 
-  // Fetch booked seats with useQuery using object notation
+  // Fetch data using useQuery
   const {
-    data: bookedSeats = [],
+    data: movies = [],
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["bookedSeats", id],
-    queryFn: () => getOneSeat(id),
-    onSuccess: (data) => {
-      // Filter booked seats based on their 'status'
-      const bookedSeatNames = data
-        .filter((seat) => seat.status === "booked")
-        .map((seat) => seat.kursi);
-      setBookedSeats(bookedSeatNames);
-    },
-    onError: () => {
-      setErrorMessage("Failed to load booked seats. Please try again.");
-    },
+    queryKey: ["PupolarFilm"],
+    queryFn: getFilm,
   });
 
-  // Toggle pemilihan kursi
-  const toggleSeat = (seat) => {
-    setSelectedSeats((prevSelectedSeats) => {
-      if (prevSelectedSeats.includes(seat)) {
-        return prevSelectedSeats.filter((s) => s !== seat);
-      } else {
-        return [...prevSelectedSeats, seat];
-      }
-    });
+  const truncateText = (text, length) => {
+    if (text.length > length) {
+      return `${text.slice(0, length)}...`;
+    }
+    return text;
   };
 
-  // Submit data ke server
-  const handleSubmit = async () => {
-    const jadwal = id; // ID Jadwal
-    const status = "booked"; // Status kursi yang dipilih
-    dispatch(setKursi(selectedSeats));
-
-    try {
-      // Kirim request untuk setiap kursi yang dipilih
-      const promises = selectedSeats.map((kursi) =>
-        axios.post(
-          "https://moviestar-iota.vercel.app/api/seat/create",
-          { jadwal, kursi, status },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-      );
-
-      // Tunggu semua request selesai
-      await Promise.all(promises);
-
-      // Navigasi ke halaman berikutnya
-      navigate(`/order/${jadwal}`);
-    } catch (error) {
-      setErrorMessage(
-        error.response?.data?.error || "Failed to book seats, please try again."
-      );
-    }
+  const toggleDescription = (id) => {
+    setExpandedMovieId(expandedMovieId === id ? null : id);
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <p>Loading movies...</p>;
   }
 
   if (error) {
-    return <div>Error loading seats: {error.message}</div>;
+    return <p>Failed to load movies. Please try again later.</p>;
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-white text-black flex flex-col items-center py-6">
-        {/* Screen */}
-        <div className="w-3/4 bg-gradient-to-r from-gray-500 to-gray-300 rounded-lg h-12 flex items-center justify-center mb-8 shadow-lg">
-          <span className="text-lg font-bold">SCREEN</span>
-        </div>
-
-        {/* Seats */}
-        <div className="flex gap-4">
-          {cols.map((col) => (
-            <div key={col} className="flex flex-col gap-2">
-              {rows.map((row) => {
-                const seat = `${row}${col}`;
-                const isBooked = bookedSeats.includes(seat);
-                const isSelected = selectedSeats.includes(seat);
-
-                return (
-                  <button
-                    key={seat}
-                    onClick={() => !isBooked && toggleSeat(seat)} // Disable click on booked seats
-                    className={`w-8 h-8 rounded-full text-sm font-bold flex items-center justify-center ${
-                      isBooked
-                        ? "bg-gray-500 text-white cursor-not-allowed"
-                        : isSelected
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-300 hover:bg-blue-300"
-                    }`}
-                  >
-                    {seat}
-                  </button>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-
-        {/* Error Message */}
-        {errorMessage && (
-          <div className="text-red-500 mt-4 font-semibold">{errorMessage}</div>
-        )}
-
-        {/* Legend */}
-        <div className="flex gap-4 items-center justify-center mt-8">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
-            <span>Available</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gray-500 rounded-full"></div>
-            <span>Booked</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-500 rounded-full"></div>
-            <span>Selected</span>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="w-full flex justify-between items-center mt-8 px-6">
-          <span className="text-lg font-bold">
-            Rp {selectedSeats.length * 50000}
-          </span>
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 px-6 py-2 rounded-full font-bold text-white hover:bg-blue-600"
-          >
-            Confirm
-          </button>
-        </div>
+    <div className="mt-6">
+      {/* Title and "See More" */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold text-gray-800">Popular</h1>
+        <button className="text-sm text-cyan-600 hover:underline">
+          See more
+        </button>
       </div>
-      <Footer />
-    </>
-  );
-};
 
-export default Seat;
+      {/* List of Movies */}
+      {movies.map((movie) => (
+        <div key={movie.id} className="mt-4 px-3">
+          {/* Movie Item */}
+          <div className="flex flex-wrap gap-4 items-center border-b border-gray-200 pb-4">
+            {/* Poster */}
+            <div className="w-40 h-60 flex-shrink-0">
+              <img
+                src={movie.gambar}
+                className="w-full h-full object-cover rounded-md shadow-md"
+                alt="Movie poster"
+              />
+            </div>
+
+            {/* Movie Details */}
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-gray-800">{movie.judul}</h2>
+              <p className="text-lg font-light text-gray-500">
+                {expandedMovieId === movie.id
+                  ? movie.deskripsi
+                  : truncateText(movie.deskripsi, 33)}
+              </p>
+
+              {/* See More / See Less Button */}
+              {movie.deskripsi.length > 100 && (
+                <button
+                  className="text-sm text-cyan-600 hover:underline mt-2"
+                  onClick={() => toggleDescription(movie.id)}
+                >
+                  {expandedMovieId === movie.id ? "See less" : "See more"}
+                </button>
+              )}
+
+              {/* Duration */}
+              <p className="text-base text-gray-500 mt-2">{movie.durasi}</p>
+              <button className="bg-cyan-600 text-white px-4 py-2 rounded-xl mt-4">
+                Booking Now
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
