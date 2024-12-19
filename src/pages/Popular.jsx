@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getFilm } from "../services/Film";
+import Loading from "../component/Loading";
 
 export default function Popular() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function Popular() {
   };
 
   if (isLoading) {
-    return <p>Loading movies...</p>;
+    return <Loading />;
   }
 
   if (error) {

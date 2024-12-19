@@ -5,6 +5,7 @@ import Footer from "./Fotter";
 import { getFilm } from "../services/Film";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../component/Loading";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Home() {
 
   // Handle loading and error states
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (error) {
