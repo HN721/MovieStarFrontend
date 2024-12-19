@@ -7,7 +7,7 @@ import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
 import { getOneSeat } from "../services/Seat";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const Seat = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient(); // Create query client to invalidate cache
 
   // Fetch booked seats using React Query
   const {
@@ -32,6 +33,10 @@ const Seat = () => {
       const response = await getOneSeat(id);
       const booked = response.data.filter((seat) => seat.status === "booked");
       return booked.map((seat) => seat.kursi);
+    },
+    // Refetch after a mutation (booking a seat)
+    onSuccess: (data) => {
+      queryClient.setQueryData(["bookedSeats", id], data);
     },
   });
 
@@ -69,6 +74,9 @@ const Seat = () => {
 
       // Wait for all requests to complete
       await Promise.all(promises);
+
+      // Refetch booked seats to reflect changes
+      queryClient.invalidateQueries(["bookedSeats", id]);
 
       // Navigate to the next page
       navigate(`/order/${jadwal}`);
