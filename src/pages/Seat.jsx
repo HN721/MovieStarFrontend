@@ -27,7 +27,7 @@ const Seat = () => {
     error,
   } = useQuery({
     queryKey: ["seat", id],
-    queryFn: getOneSeat(id),
+    queryFn: () => getOneSeat(id),
   });
   if (isLoading) {
     return <p>Loading...</p>;
