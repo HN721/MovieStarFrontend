@@ -6,8 +6,8 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
-import { useQuery } from "react-query";
 import { getOneSeat } from "../services/Seat";
+import { useQuery } from "@tanstack/react-query";
 
 const Seat = () => {
   const dispatch = useDispatch();
