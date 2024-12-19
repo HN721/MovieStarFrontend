@@ -26,21 +26,14 @@ const Seat = () => {
     data: bookedSeats = [],
     isLoading,
     error,
-  } = useQuery(
-    ["bookedSeats", id],
-    async () => {
+  } = useQuery({
+    queryKey: ["bookedSeats", id],
+    queryFn: async () => {
       const response = await getOneSeat(id);
       const booked = response.data.filter((seat) => seat.status === "booked");
-      return booked.map((seat) => seat.kursi); // Return only seat identifiers
+      return booked.map((seat) => seat.kursi);
     },
-    {
-      enabled: !!id, // Ensure the query runs only if `id` is valid
-      onError: (error) => {
-        console.error("Failed to fetch booked seats:", error.message);
-        setErrorMessage("Failed to load booked seats. Please try again.");
-      },
-    }
-  );
+  });
 
   // Toggle seat selection
   const toggleSeat = (seat) => {
