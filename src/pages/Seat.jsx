@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
 import { getOneSeat } from "../services/Seat";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../component/Loading";
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Seat = () => {
     queryFn: () => getOneSeat(id),
   });
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   // Toggle pemilihan kursi

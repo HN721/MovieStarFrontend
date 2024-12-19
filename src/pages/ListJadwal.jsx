@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "../component/Navbar";
 import Footer from "./Fotter";
 import { useNavigate } from "react-router-dom";
+import Loading from "../component/Loading";
 
 const JadwalList = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const JadwalList = () => {
   function handleClick(id) {
     navigate(`/ticket/${id}`);
   }
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  if (loading) return <Loading />;
 
   return (
     <>

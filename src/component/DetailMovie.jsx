@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Footer from "../pages/Fotter";
 import Navbar from "./Navbar";
 import { getOne } from "../services/Film";
+import Loading from "./Loading";
 
 export default function DetailMovie() {
   const { id } = useParams(); // Fetch movie ID from URL
@@ -31,7 +32,7 @@ export default function DetailMovie() {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>; // Render a loading spinner or message
+    return <Loading />; // Render a loading spinner or message
   }
 
   if (!movie) {
