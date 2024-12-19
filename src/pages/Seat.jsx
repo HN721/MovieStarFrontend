@@ -27,10 +27,8 @@ const Seat = () => {
       try {
         const response = await getOneSeat(id);
         // Filter booked seats based on their 'status'
-        const booked = response.data.filter((seat) => seat.status === "booked");
-        // Store only the seat identifiers for easy comparison
-        const bookedSeatNames = booked.map((seat) => seat.kursi);
-        setBookedSeats(bookedSeatNames);
+
+        setBookedSeats(response);
       } catch (error) {
         console.error("Failed to fetch booked seats:", error.message);
         setErrorMessage("Failed to load booked seats. Please try again.");
