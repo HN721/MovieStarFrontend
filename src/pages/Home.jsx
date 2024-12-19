@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
-import poster from "../assets/HAWKINS.jpg";
 import Popular from "./Popular";
 import Footer from "./Fotter";
 import { getFilm } from "../services/Film";
