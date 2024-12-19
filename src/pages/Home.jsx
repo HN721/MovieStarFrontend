@@ -13,10 +13,10 @@ export default function Home() {
   }
   const { data: movies = [], isLoading, error } = useQuery(["Film"], getFilm);
   if (isLoading) {
-    <p>Loading</p>;
+    return <p>Loading</p>;
   }
   if (error) {
-    <p>Error Failed to catch Movie</p>;
+    return <p>Error Failed to catch Movie</p>;
   }
   return (
     <>
