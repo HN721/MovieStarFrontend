@@ -23,74 +23,79 @@ import AuthorizationRoute from "./component/auth/AuthorizationRoute";
 import OrderAccount from "./pages/User/OrderAccount";
 
 // Create an instance of QueryClient
+const queryClient = new QueryClient();
 
 const App = () => {
   const token = getToken();
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/detail/:id"
-          element={
-            <AuthRoute>
-              <DetailMovie />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/detail/jadwal"
-          element={
-            <AuthRoute>
-              <JadwalList />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="account/order"
-          element={
-            <AuthRoute>
-              <OrderAccount />
-            </AuthRoute>
-          }
-        />
-        <Route path="/account" element={<Account />} />
-        <Route
-          path="/ticket/:id"
-          element={
-            <AuthRoute>
-              <Seat />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/order/:id"
-          element={
-            <AuthRoute>
-              <Order />
-            </AuthRoute>
-          }
-        />
-        <Route path="/account/ticket/:id" element={<Ticket />} />
+    <QueryClientProvider client={queryClient}>
+      {" "}
+      {/* Wrap the app with QueryClientProvider */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/detail/:id"
+            element={
+              <AuthRoute>
+                <DetailMovie />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/detail/jadwal"
+            element={
+              <AuthRoute>
+                <JadwalList />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="account/order"
+            element={
+              <AuthRoute>
+                <OrderAccount />
+              </AuthRoute>
+            }
+          />
+          <Route path="/account" element={<Account />} />
+          <Route
+            path="/ticket/:id"
+            element={
+              <AuthRoute>
+                <Seat />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <AuthRoute>
+                <Order />
+              </AuthRoute>
+            }
+          />
+          <Route path="/account/ticket/:id" element={<Ticket />} />
 
-        <Route
-          path="/admin/*"
-          element={
-            <AuthRoute>
-              <AdminRoutes />
-              {/* <AuthorizationRoute>
+          <Route
+            path="/admin/*"
+            element={
+              <AuthRoute>
+                <AdminRoutes />
+                {/* <AuthorizationRoute>
                  
                 </AuthorizationRoute> */}
-            </AuthRoute>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/register"
-          element={token ? <AdminRoutes /> : <Register />}
-        />
-      </Routes>
-    </Router>
+              </AuthRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/register"
+            element={token ? <AdminRoutes /> : <Register />}
+          />
+        </Routes>
+      </Router>
+    </QueryClientProvider>
   );
 };
 
