@@ -6,7 +6,6 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
-import { getOneSeat } from "../services/Seat";
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -25,7 +24,15 @@ const Seat = () => {
   useEffect(() => {
     const fetchBookedSeats = async () => {
       try {
-        const response = await getOneSeat(id);
+        const response = await axios.get(
+          `https://moviestar-iota.vercel.app/api/seat/get-one/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         // Filter booked seats based on their 'status'
         const booked = response.data.filter((seat) => seat.status === "booked");
         // Store only the seat identifiers for easy comparison
