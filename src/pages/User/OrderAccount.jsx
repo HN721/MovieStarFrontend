@@ -31,7 +31,7 @@ export default function OrderAccount() {
   return (
     <>
       <Navbar />
-      <div className="px-6 mt-6">
+      <div className="px-6 pb-12 mt-6">
         <h1 className="text-3xl font-bold text-center mb-8">Tiket Saya</h1>
 
         {isLoading ? (
