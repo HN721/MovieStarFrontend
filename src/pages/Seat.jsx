@@ -22,13 +22,9 @@ const Seat = () => {
   const navigate = useNavigate();
 
   // Fetch data kursi yang sudah dibooking menggunakan useQuery
-  const {
-    data: bookedSeats = [],
-    isLoading,
-    error,
-  } = useQuery(
+  const { data, isLoading, error } = useQuery(
     ["bookedSeats", id],
-    () => getOneSeat(id), // Ensure this is a function
+    () => getOneSeat(id),
     {
       select: (response) =>
         response.data
@@ -40,7 +36,6 @@ const Seat = () => {
     }
   );
 
-  console.log(bookedSeats);
   // Toggle pemilihan kursi
   const toggleSeat = (seat) => {
     setSelectedSeats((prevSelectedSeats) => {
@@ -96,6 +91,8 @@ const Seat = () => {
       </div>
     );
   }
+
+  const bookedSeats = data || [];
 
   return (
     <>
