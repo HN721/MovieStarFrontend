@@ -7,6 +7,7 @@ import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
 import { getOneSeat } from "../services/Seat";
+import { useQuery } from "@tanstack/react-query";
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -16,27 +17,21 @@ const Seat = () => {
   const cols = Array.from({ length: 5 }, (_, i) => i + 1);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [bookedSeats, setBookedSeats] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
 
-  // Fetch data kursi yang sudah dibooking
-  useEffect(() => {
-    const fetchBookedSeats = async () => {
-      try {
-        const response = await getOneSeat(id);
-        // Filter booked seats based on their 'status'
-
-        setBookedSeats(response);
-      } catch (error) {
-        console.error("Failed to fetch booked seats:", error.message);
-        setErrorMessage("Failed to load booked seats. Please try again.");
-      }
-    };
-    fetchBookedSeats();
-  }, [id, token]);
-  console.log(bookedSeats);
+  const {
+    data: bookedSeats = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["seat", id],
+    queryFn: getOneSeat(id),
+  });
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   // Toggle pemilihan kursi
   const toggleSeat = (seat) => {
