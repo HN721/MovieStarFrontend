@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"; // import QueryClient and QueryClientProvider
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AdminRoutes from "./pages/admin/AdminRoutes";
 import Login from "./component/Login";
 import Register from "./component/Register";
@@ -19,18 +19,14 @@ import Account from "./component/User/Account";
 import Ticket from "./pages/User/Ticket";
 import AuthRoute from "./component/auth/AuthRoute";
 import { getToken } from "./utils/getToken";
-import AuthorizationRoute from "./component/auth/AuthorizationRoute";
 import OrderAccount from "./pages/User/OrderAccount";
 
-// Create an instance of QueryClient
 const queryClient = new QueryClient();
 
 const App = () => {
   const token = getToken();
   return (
     <QueryClientProvider client={queryClient}>
-      {" "}
-      {/* Wrap the app with QueryClientProvider */}
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -76,15 +72,11 @@ const App = () => {
             }
           />
           <Route path="/account/ticket/:id" element={<Ticket />} />
-
           <Route
             path="/admin/*"
             element={
               <AuthRoute>
                 <AdminRoutes />
-                {/* <AuthorizationRoute>
-                 
-                </AuthorizationRoute> */}
               </AuthRoute>
             }
           />
