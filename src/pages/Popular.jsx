@@ -7,14 +7,9 @@ import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
 import { useQuery } from "@tanstack/react-query";
+import { getOneSeat } from "../services/Seat";
 
 // Fetch booked seats using TanStack React Query
-const fetchBookedSeats = async (id) => {
-  const response = await axios.get(
-    `https://moviestar-iota.vercel.app/api/seat/${id}`
-  );
-  return response.data;
-};
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -35,7 +30,7 @@ const Seat = () => {
     error,
   } = useQuery({
     queryKey: ["bookedSeats", id],
-    queryFn: () => fetchBookedSeats(id),
+    queryFn: () => getOneSeat(id),
     onSuccess: (data) => {
       // Filter booked seats based on their 'status'
       const bookedSeatNames = data
