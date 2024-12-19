@@ -5,6 +5,7 @@ import Navbar from "../../component/Navbar";
 import Footer from "../Fotter";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../../component/Loading";
 
 export default function OrderAccount() {
   const navigate = useNavigate();
@@ -34,9 +35,7 @@ export default function OrderAccount() {
         <h1 className="text-3xl font-bold text-center mb-8">Tiket Saya</h1>
 
         {isLoading ? (
-          <h1 className="flex justify-center items-center text-2xl font-bold text-center mb-8">
-            Loading...
-          </h1>
+          <Loading />
         ) : isError ? (
           <h1 className="flex justify-center items-center text-2xl font-bold text-center mb-8">
             Terjadi kesalahan saat memuat data.
