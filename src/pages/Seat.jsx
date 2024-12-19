@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "./Fotter";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,6 +6,8 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 import { useDispatch } from "react-redux";
 import { setKursi } from "../redux/slice/Seat";
+import { getOneSeat } from "../services/Seat";
+import { useQuery } from "@tanstack/react-query";
 
 const Seat = () => {
   const dispatch = useDispatch();
@@ -15,39 +17,32 @@ const Seat = () => {
   const cols = Array.from({ length: 5 }, (_, i) => i + 1);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [bookedSeats, setBookedSeats] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
 
-  // Fetch data kursi yang sudah dibooking
-  useEffect(() => {
-    const fetchBookedSeats = async () => {
-      try {
-        const response = await axios.get(
-          `https://moviestar-iota.vercel.app/api/seat/get-one/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        // Filter booked seats based on their 'status'
-        const booked = response.data.filter((seat) => seat.status === "booked");
-        // Store only the seat identifiers for easy comparison
-        const bookedSeatNames = booked.map((seat) => seat.kursi);
-        setBookedSeats(bookedSeatNames);
-      } catch (error) {
+  // Fetch booked seats using React Query
+  const {
+    data: bookedSeats = [],
+    isLoading,
+    error,
+  } = useQuery(
+    ["bookedSeats", id],
+    async () => {
+      const response = await getOneSeat(id);
+      const booked = response.data.filter((seat) => seat.status === "booked");
+      return booked.map((seat) => seat.kursi); // Return only seat identifiers
+    },
+    {
+      enabled: !!id, // Ensure the query runs only if `id` is valid
+      onError: (error) => {
         console.error("Failed to fetch booked seats:", error.message);
         setErrorMessage("Failed to load booked seats. Please try again.");
-      }
-    };
-    fetchBookedSeats();
-  }, [id, token]);
-  console.log(bookedSeats);
+      },
+    }
+  );
 
-  // Toggle pemilihan kursi
+  // Toggle seat selection
   const toggleSeat = (seat) => {
     setSelectedSeats((prevSelectedSeats) => {
       if (prevSelectedSeats.includes(seat)) {
@@ -58,14 +53,14 @@ const Seat = () => {
     });
   };
 
-  // Submit data ke server
+  // Submit data to server
   const handleSubmit = async () => {
     const jadwal = id; // ID Jadwal
     const status = "booked"; // Status kursi yang dipilih
     dispatch(setKursi(selectedSeats));
 
     try {
-      // Kirim request untuk setiap kursi yang dipilih
+      // Send requests for each selected seat
       const promises = selectedSeats.map((kursi) =>
         axios.post(
           "https://moviestar-iota.vercel.app/api/seat/create",
@@ -79,10 +74,10 @@ const Seat = () => {
         )
       );
 
-      // Tunggu semua request selesai
+      // Wait for all requests to complete
       await Promise.all(promises);
 
-      // Navigasi ke halaman berikutnya
+      // Navigate to the next page
       navigate(`/order/${jadwal}`);
     } catch (error) {
       setErrorMessage(
@@ -90,6 +85,18 @@ const Seat = () => {
       );
     }
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <p>Loading seats...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
